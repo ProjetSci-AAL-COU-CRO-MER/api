@@ -5,7 +5,7 @@ const client = new pg.Client({
     port: 5432,
     user: 'postgres',
     password: 'root',
-    database: 'emergency-simulator'
+    database: 'emergency-manager'
 }) 
 client.connect();
 
