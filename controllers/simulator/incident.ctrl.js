@@ -1,5 +1,4 @@
 const db = require('../../config/db.simulator');
-const { asyncQuery } = require('../../query_maker');
 const table = 'incident';
 const table_type = 'incident_type';
 
