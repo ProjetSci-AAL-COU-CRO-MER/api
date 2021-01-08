@@ -10,7 +10,9 @@ const UtilisateurCtrl = new UtilisateurController();
 
 router.get('/config-pos-geo', confPosGeoCtrl.get);
 router.get('/incident/all', IncidentCtrl.getAll);
-router.get('/incident/id/:id', IncidentCtrl.getOne);
+router.get('/incident/get', IncidentCtrl.getOne); //need url param id
+router.post('/incident/create', IncidentCtrl.createOne);
+router.get('/incident/delete', IncidentCtrl.deleteAll);
 router.get('/utilisateur/getInstance', UtilisateurCtrl.getInstance);
 
 module.exports = router;
