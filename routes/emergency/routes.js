@@ -11,6 +11,6 @@ const UtilisateurCtrl = new UtilisateurController();
 router.get('/capteur/all', CapteurCtrl.getAll);
 router.get('/incident/all', IncidentCtrl.getAll);
 router.get('/incident/id/:id', IncidentCtrl.getOne);
-router.get('/utilisateur/getInstance', UtilisateurCtrl.getInstance);
+router.post('/utilisateur/login', UtilisateurCtrl.login);
 
 module.exports = router;

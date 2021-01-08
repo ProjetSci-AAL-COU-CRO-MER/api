@@ -14,8 +14,21 @@ class UtilisateurController {
 
     getInstance(req, res, next) {
         db
-        .query(`SELECT * FROM ${table} where id = 1`)
+        .query(`SELECT id, nom, prenom FROM ${table} where id = 1`)
         .then(e => res.send(e.rows[0]))
+        .catch(e => console.error(e.stack));
+    }
+
+    login(req, res) {
+        db
+        .query(`SELECT id, nom, prenom FROM ${table} where password = '${req.body.passwordHached}'`)
+        .then(e => {
+            if(e.rows[0]) {
+                res.send(true);
+            } else {
+                res.send(false);
+            }
+        })
         .catch(e => console.error(e.stack));
     }
 }

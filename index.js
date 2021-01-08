@@ -3,10 +3,13 @@ const simulatorRoutes = require('./routes/simulator/routes.js');
 
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require("body-parser");
 
 // SET UP Express & Librairy
 const app = express();
 app.use(cors());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json())
 
 //Load HTTP module
 const http = require("http");
