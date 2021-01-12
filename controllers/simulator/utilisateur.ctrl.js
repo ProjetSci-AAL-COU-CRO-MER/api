@@ -18,6 +18,19 @@ class UtilisateurController {
         .then(e => res.send(e.rows[0]))
         .catch(e => console.error(e.stack));
     }
+
+    login(req, res) {
+        db
+        .query(`SELECT id, nom, prenom FROM ${table} where password = '${req.body.passwordHached}'`)
+        .then(e => {
+            if(e.rows[0]) {
+                res.send(true);
+            } else {
+                res.send(false);
+            }
+        })
+        .catch(e => console.error(e.stack));
+    }
 }
 
 module.exports = UtilisateurController;
