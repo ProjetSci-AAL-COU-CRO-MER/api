@@ -42,6 +42,14 @@ class ConfPosGeoController {
         .then(e => res.send(true))
         .catch(e => console.error(e.stack));
     }
+
+    deleteConfig(req, res, next) {
+        const query = `DELETE FROM ${table} WHERE id = ${req.params.id}`;
+        db
+        .query(query)
+        .then(e => res.send(true))
+        .catch(e => console.error(e.stack));
+    }
 }
 
 module.exports = ConfPosGeoController;
