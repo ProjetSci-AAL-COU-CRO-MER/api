@@ -22,8 +22,7 @@ router.get('/config-pos-geo/desactive/:id', ConfPosGeoCtrl.desactivConfig);
 router.get('/config-pos-geo/delete/:id', ConfPosGeoCtrl.deleteConfig);
 
 router.get('/capteur/all', CapteurCtrl.getAll);
-
-router.get('/db-config-set/capteur-camion', CapteurCtrl.setCapteur);
+router.post('/capteur/set-intensite', CapteurCtrl.setIntensite);
 
 router.get('/incident/all', IncidentCtrl.getAll);
 router.get('/incident/id/:id', IncidentCtrl.getOne);
@@ -32,6 +31,11 @@ router.get('/incident/all', IncidentCtrl.getAll);
 router.post('/utilisateur/login', UtilisateurCtrl.login);
 
 router.get('/etablissement/all', EtablissementCtrl.getAll);
+router.get('/etablissement/list', EtablissementCtrl.getList);
+router.get('/etablissement/type/list', EtablissementCtrl.getListTypeEtablissement);
+router.get('/etablissement/one/:id', EtablissementCtrl.getOne);
+router.post('/etablissement/new', EtablissementCtrl.createEtablissement);
+router.get('/etablissement/delete/:id', EtablissementCtrl.deleteEtablissement);
 
 router.get('/vehicule/all', VehiculeCtrl.getAll);
 

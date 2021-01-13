@@ -20,6 +20,10 @@ class VehiculeController {
         .then(e => res.send(e.rows[0]))
         .catch(e => console.error(e.stack));
     }
+
+    getVehiculeEtablissement(req, res, next) {
+        
+    }
 }
 
 module.exports = VehiculeController;
