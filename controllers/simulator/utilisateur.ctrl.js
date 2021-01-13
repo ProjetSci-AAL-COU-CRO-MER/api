@@ -1,7 +1,9 @@
 const db = require('../../config/db.simulator');
+const jwt = require('jsonwebtoken');
 const table = 'utilisateur';
 
 class UtilisateurController {
+
 
     constructor() {}
 
@@ -24,9 +26,10 @@ class UtilisateurController {
         .query(`SELECT id, nom, prenom FROM ${table} where password = '${req.body.passwordHached}'`)
         .then(e => {
             if(e.rows[0]) {
-                res.send(true);
+                const token = jwt.sign({nom: e.rows[0].nom}, 'lamasalt');
+                res.send({pass: true, token: token});
             } else {
-                res.send(false);
+                res.send({pass: false, token: null});
             }
         })
         .catch(e => console.error(e.stack));
