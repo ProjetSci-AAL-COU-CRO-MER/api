@@ -28,7 +28,7 @@ class ConfPosGeoController {
     }
 
     activConfig(req, res, next) {
-        const query = `UPDATE ${table} SET b_actif=TRUE WHERE id = ${req.param.id}`;
+        const query = `UPDATE ${table} SET b_actif = 'TRUE' WHERE id = ${req.params.id}`;
         db
         .query(query)
         .then(e => res.send(true))
@@ -36,7 +36,7 @@ class ConfPosGeoController {
     }
 
     desactivConfig(req, res, next) {
-        const query = `UPDATE ${table} SET b_actif=FALSE WHERE id = ${req.param.id}`;
+        const query = `UPDATE ${table} SET b_actif = 'FALSE' WHERE id = ${req.params.id}`;
         db
         .query(query)
         .then(e => res.send(true))

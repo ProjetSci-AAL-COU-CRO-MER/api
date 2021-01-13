@@ -9,7 +9,7 @@ class VehiculeController {
 
     getAll(req, res, next) {
         db
-        .query(`SELECT * FROM ${table} v LEFT JOIN ${table_type} vt ON vt.id = v.id_vehicule_type LEFT JOIN ${table_etat} ve ON ve.id = v.id_vehicule_etat`)
+        .query(`SELECT v.nom, vt.libelle as type_vehicule, ve.libelle as etat_vehicule, v.latitude, v.longitude FROM ${table} v LEFT JOIN ${table_type} vt ON vt.id = v.id_vehicule_type LEFT JOIN ${table_etat} ve ON ve.id = v.id_vehicule_etat`)
         .then(e => res.send(e.rows))
         .catch(e => console.error(e.stack));
     }
