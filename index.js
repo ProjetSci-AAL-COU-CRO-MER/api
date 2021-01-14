@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 // SET UP Express & Librairy
 const app = express();
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 //Load HTTP module

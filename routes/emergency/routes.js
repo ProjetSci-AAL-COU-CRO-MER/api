@@ -23,11 +23,13 @@ router.get('/config-pos-geo/delete/:id', ConfPosGeoCtrl.deleteConfig);
 
 router.get('/capteur/all', CapteurCtrl.getAll);
 router.post('/capteur/intensite', CapteurCtrl.setIntensite);
+router.post('/capteur/update', CapteurCtrl.updateCapteurs);
 
 router.get('/incident/all', IncidentCtrl.getAll);
 router.get('/incident/id/:id', IncidentCtrl.getOne);
 router.get('/incident/all', IncidentCtrl.getAll);
 router.get('/incident/delete', IncidentCtrl.deleteAll);
+router.get('/incident/deleteExctinct', IncidentCtrl.deleteExctinct);
 router.post('/incident/update', IncidentCtrl.updateIncidents);
 router.post('/incident/create', IncidentCtrl.createOne);
 
@@ -45,5 +47,7 @@ router.get('/vehicule/etablissement/:id', VehiculeCtrl.getVehiculeEtablissement)
 router.get('/vehicule/type/all', VehiculeCtrl.getVehiculeTypeList);
 router.post('/vehicule/new', VehiculeCtrl.newVehicule);
 router.get('/vehicule/delete/:id', VehiculeCtrl.deleteVehicule);
+router.get('/vehicule/busy', VehiculeCtrl.getAllBusyVehicule);
+router.post('/vehicule/assigneFire', VehiculeCtrl.assigneIncidentToVehicule);
 
 module.exports = router;

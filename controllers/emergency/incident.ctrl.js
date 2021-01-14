@@ -1,16 +1,17 @@
 const db = require('../../config/db.emergency');
 const table = 'incident';
 const table_type = 'incident_type';
+const table_incident_vehicule = 'incident_vehicule';
 
 class IncidentController {
 
-    constructor() {}
+    constructor() { }
 
     getAll(req, res, next) {
         db
-        .query(`SELECT * FROM ${table} i LEFT JOIN ${table_type} it ON i.id_incident_type = it.id`)
-        .then(e => res.send(e.rows))
-        .catch(e => console.error(e.stack));
+            .query(`SELECT ${table}.* FROM ${table} i LEFT JOIN ${table_type} it ON i.id_incident_type = it.id`)
+            .then(e => res.send(e.rows))
+            .catch(e => console.error(e.stack));
     }
 
 
@@ -29,6 +30,24 @@ class IncidentController {
             res.send(result.rows)
         } catch (error) {
             res.send({ error: error.message })
+        }
+    }
+
+    async deleteExctinct(req, res, next) {
+        try {
+            let result = await db.query(`
+            DELETE FROM ${table_incident_vehicule} WHERE ${table_incident_vehicule}.id_incident IN (SELECT ${table}.id FROM ${table});
+            DELETE FROM ${table};
+            `);
+            console.log({ delete: result })
+            // for (const iterator of result.rows) {
+            //     db.query(`
+            //     DELETE FROM ${table_incident_vehicule} WHERE ${table_incident_vehicule}.id_incident = ${iterator.id}
+            //     `);
+            // }
+            res.send();
+        } catch (error) {
+            res.send({ error: error.message });
         }
     }
 
@@ -56,9 +75,9 @@ class IncidentController {
 
     getOne(req, res, next) {
         db
-        .query(`SELECT * FROM ${table} where ${req.body.id_incident} = id`)
-        .then(e => res.send(e.rows[0]))
-        .catch(e => console.error(e.stack)); 
+            .query(`SELECT * FROM ${table} where ${req.body.id_incident} = id`)
+            .then(e => res.send(e.rows[0]))
+            .catch(e => console.error(e.stack));
     }
 }
 

@@ -3,6 +3,8 @@ const table = 'vehicule';
 const table_type = 'vehicule_type';
 const table_etat = 'vehicule_etat';
 const table_etablissement = 'vehicule_etat';
+const table_incident_vehicule = 'incident_vehicule';
+const table_incident = 'incident';
 
 class VehiculeController {
 
@@ -10,7 +12,12 @@ class VehiculeController {
 
     getAll(req, res, next) {
         db
-            .query(`SELECT v.nom, et.id as id_etablissement, vt.libelle as type_vehicule, ve.libelle as etat_vehicule, v.latitude, v.longitude , v.id FROM ${table} v LEFT JOIN ${table_type} vt ON vt.id = v.id_vehicule_type LEFT JOIN ${table_etat} ve ON ve.id = v.id_vehicule_etat INNER JOIN ${table_etablissement} as et on v.id_etablissement=et.id `)
+            .query(`SELECT ${table_incident}.longitude as incident_long, ${table_incident}.latitude as incident_lat,v.nom, et.id as id_etablissement, vt.libelle as type_vehicule, ve.libelle as etat_vehicule, v.latitude, v.longitude , v.id 
+            FROM ${table} v 
+            LEFT JOIN ${table_type} vt ON vt.id = v.id_vehicule_type 
+            LEFT JOIN ${table_etat} ve ON ve.id = v.id_vehicule_etat INNER JOIN ${table_etablissement} as et on v.id_etablissement=et.id 
+            LEFT JOIN ${table_incident_vehicule}  ON ${table_incident_vehicule}.id_vehicule = v.id 
+            LEFT JOIN ${table_incident}  ON ${table_incident_vehicule}.id_incident = ${table_incident}.id`)
             .then(e => res.send(e.rows))
             .catch(e => console.error(e.stack));
     }
@@ -45,11 +52,28 @@ class VehiculeController {
             .catch(e => console.error(e.stack));
     }
 
-    assigneIncidentToVehicule(req, res, next) {
+    async assigneIncidentToVehicule(req, res, next) {
         try {
-
+            console.log("assignment", req.body);
+            let value = req.body;
+            let result = await db.query(`INSERT INTO ${table_incident_vehicule} (id_incident, id_vehicule, date) VALUES (${value.id_incident}, ${value.id_vehicle}, NOW())`);
+            res.send();
         } catch (error) {
-            console.log(error);
+            console.log({ error });
+            res.send();
+        }
+    }
+
+    async getAllBusyVehicule(req, res, next) {
+        try {
+            console.log("busy");
+            let result = await db.query(`
+            SELECT ${table_incident_vehicule}.id_vehicule
+            FROM ${table_incident_vehicule}`);
+            console.log(result.rows);
+            res.send(result.rows);
+        } catch (error) {
+            console.log({ error });
             res.send({ error })
         }
     }

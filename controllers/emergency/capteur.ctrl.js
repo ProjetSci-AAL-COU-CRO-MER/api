@@ -21,11 +21,23 @@ class CapteurController {
 
     async updateCapteurs(req, res, next) {
         try {
-            for (const iterator of req.body) {
-                await db.query(`UPDATE ${table}
-                SET intensite = ${iterator.value}
-                WHERE ${table}.id = ${iterator.id}`);
+            let string = "";
+            for (let index = 0; index < req.body.length; index++) {
+                const element = req.body[index];
+                string += `(${element.id},${element.latitude},${element.longitude},${element.value})`;
+                if (index !== req.body.length - 1) {
+                    string += ",";
+                }
             }
+            console.log(string);
+
+            let result = await db.query(`INSERT INTO ${table} (id, latitude, longitude, intensite)
+            VALUES ${string}
+            ON CONFLICT (id) DO UPDATE 
+            SET latitude = excluded.latitude, 
+            longitude = excluded.longitude,
+            intensite = excluded.intensite;`)
+            console.log(result);
             res.send();
         } catch (error) {
             console.log(error);
@@ -36,9 +48,9 @@ class CapteurController {
     setIntensite(req, res, next) {
         console.log(req.body);
         db.
-        query(`UPDATE ${table} SET 'intensite' = ${req.body.value} WHERE longitude = ${req.body.longitude} AND latitude = ${req.body.lattitude}`)
-        .then(e => res.send(e.rows[0]))
-        .catch(e => console.error(e.stack));
+            query(`UPDATE ${table} SET 'intensite' = ${req.body.value} WHERE longitude = ${req.body.longitude} AND latitude = ${req.body.lattitude}`)
+            .then(e => res.send(e.rows[0]))
+            .catch(e => console.error(e.stack));
     }
 }
 
