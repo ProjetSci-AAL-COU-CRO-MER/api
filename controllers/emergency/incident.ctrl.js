@@ -9,7 +9,8 @@ class IncidentController {
 
     getAll(req, res, next) {
         db
-            .query(`SELECT ${table}.* FROM ${table} i LEFT JOIN ${table_type} it ON i.id_incident_type = it.id`)
+            .query(`SELECT ${table}.*,${table_type}.code,${table_type}.libelle  FROM ${table} LEFT JOIN ${table_type} ON ${table}.id_incident_type = ${table_type}.id`)
+             
             .then(e => res.send(e.rows))
             .catch(e => console.error(e.stack));
     }
