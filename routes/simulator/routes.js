@@ -18,6 +18,7 @@ router.get('/config-pos-geo/delete/:id', ConfPosGeoCtrl.deleteConfig);
 router.get('/incident/all', IncidentCtrl.getAll);
 router.get('/incident/get/:id', IncidentCtrl.getOne); //need url param id
 router.get('/incident/feu/all', IncidentCtrl.getAllFeux);
+router.post('/incident/update', IncidentCtrl.updateIncidents);
 router.post('/incident/create', IncidentCtrl.createOne);
 router.get('/incident/delete', IncidentCtrl.deleteAll);
 

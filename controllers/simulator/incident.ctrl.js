@@ -17,7 +17,19 @@ class IncidentController {
     }
 
     getOne(req, res, next) {
-        console.log(req.query);
+    }
+
+    updateIncidents(req, res, next) {
+        try {
+            for (const iterator of req.body) {
+                db.query(`UPDATE ${table}
+                SET latitude = ${iterator.latitude}, longitude = ${iterator.longitude},intensite = ${iterator.intensite}
+                WHERE ${table}.id = ${iterator.id}`)
+            }
+            res.send();
+        } catch (error) {
+            res.send({ error: error.message })
+        }
     }
 
     getAllFeux(req, res, next) {
@@ -28,9 +40,9 @@ class IncidentController {
                 WHERE it.code = 'INA' OR it.code = 'INB' OR it.code = 'INC' OR it.code = 'IND' OR it.code = 'INE' OR it.code = 'INF'
             `
             db
-            .query(query)
-            .then(e => res.send(e.rows))
-            .catch(e => console.error(e.stack));
+                .query(query)
+                .then(e => res.send(e.rows))
+                .catch(e => console.error(e.stack));
         } catch (error) {
             res.send({ error: error.message })
         }
