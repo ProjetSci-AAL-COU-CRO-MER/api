@@ -8,7 +8,7 @@ class EtablissementController {
 
     getAll(req, res, next) {
         db
-        .query(`SELECT * FROM ${table} e LEFT JOIN ${table_type} et ON et.id = e.id_etablissement_type`)
+        .query(`SELECT e.*,et.libelle FROM ${table} e LEFT JOIN ${table_type} et ON et.id = e.id_etablissement_type`)
         .then(e => res.send(e.rows))
         .catch(e => console.error(e.stack));
     }
