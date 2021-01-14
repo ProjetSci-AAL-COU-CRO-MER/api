@@ -22,7 +22,32 @@ class VehiculeController {
     }
 
     getVehiculeEtablissement(req, res, next) {
-        
+        const query = `
+            SELECT v.id, v.nom, vt.libelle as vehicule_type, v.latitude, v.longitude, ve.libelle as vehicule_etat FROM ${table} v
+            LEFT JOIN ${table_type} vt ON vt.id = v.id_vehicule_type
+            LEFT JOIN ${table_etat} ve ON ve.id = v.id_vehicule_etat
+            WHERE v.id_etablissement = ${req.params.id}
+        `;
+        db
+        .query(query)
+        .then(e => res.send(e.rows))
+        .catch(e => console.error(e.stack));
+    }
+
+    newVehicule(req, res, next) {
+        const query = `INSERT INTO ${table} (nom, longitude, latitude, id_etablissement, id_vehicule_type, id_vehicule_etat) VALUES ('${req.body.nom}', ${req.body.longitude}, ${req.body.latitude}, ${req.body.id_etablissement}, ${req.body.id_vehicule_type}, ${req.body.id_vehicule_etat})`;
+        db
+        .query(query)
+        .then(e => res.send(true))
+        .catch(e => console.error(e.stack));
+    }
+
+    deleteVehicule(req, res, next) {
+        const query = `DELETE FROM ${table} WHERE id = ${req.params.id}`;
+        db
+        .query(query)
+        .then(e => res.send(true))
+        .catch(e => console.error(e.stack)); 
     }
 }
 

@@ -38,5 +38,8 @@ router.post('/etablissement/new', EtablissementCtrl.createEtablissement);
 router.get('/etablissement/delete/:id', EtablissementCtrl.deleteEtablissement);
 
 router.get('/vehicule/all', VehiculeCtrl.getAll);
+router.get('/vehicule/etablissement/:id', VehiculeCtrl.getVehiculeEtablissement);
+router.post('/vehicule/new', VehiculeCtrl.newVehicule);
+router.get('/vehicule/delete/:id', VehiculeCtrl.deleteVehicule);
 
 module.exports = router;

@@ -20,7 +20,8 @@ class CapteurController {
     }
 
     setIntensite(req, res, next) {
-        for (const el of req.body) {
+        const data = JSON.parse(req.body);
+        for (const el of data) {
             db.
             query(`UPDATE ${table} SET 'intensite' = ${el.value} WHERE longitude = ${el.longitude} AND latitude = ${el.latitude}`)
             .then(e => res.send(e.rows[0]))
