@@ -29,7 +29,7 @@ class CapteurController {
                     string += ",";
                 }
             }
-            console.log(string);
+            // console.log(string);
 
             let result = await db.query(`INSERT INTO ${table} (id, latitude, longitude, intensite)
             VALUES ${string}

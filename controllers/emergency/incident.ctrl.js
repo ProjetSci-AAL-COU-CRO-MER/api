@@ -10,7 +10,7 @@ class IncidentController {
     getAll(req, res, next) {
         db
             .query(`SELECT ${table}.*,${table_type}.code,${table_type}.libelle  FROM ${table} LEFT JOIN ${table_type} ON ${table}.id_incident_type = ${table_type}.id`)
-             
+
             .then(e => res.send(e.rows))
             .catch(e => console.error(e.stack));
     }
@@ -28,6 +28,7 @@ class IncidentController {
             let id_type = typeRows[0].id;
             result = await db.query(`INSERT INTO ${table} (longitude, latitude, intensite, id_incident_type) 
             VALUES (${longitude}, ${latitude}, ${intensite}, ${id_type}) RETURNING *`);
+            console.log("CREATION" + result.rows)
             res.send(result.rows)
         } catch (error) {
             res.send({ error: error.message })
@@ -37,10 +38,8 @@ class IncidentController {
     async deleteExctinct(req, res, next) {
         try {
             let result = await db.query(`
-            DELETE FROM ${table_incident_vehicule} WHERE ${table_incident_vehicule}.id_incident IN (SELECT ${table}.id FROM ${table});
-            DELETE FROM ${table};
+            DELETE FROM ${table} WHERE intensite = 0
             `);
-            console.log({ delete: result })
             // for (const iterator of result.rows) {
             //     db.query(`
             //     DELETE FROM ${table_incident_vehicule} WHERE ${table_incident_vehicule}.id_incident = ${iterator.id}
@@ -48,6 +47,7 @@ class IncidentController {
             // }
             res.send();
         } catch (error) {
+            console.log(error);
             res.send({ error: error.message });
         }
     }

@@ -68,7 +68,7 @@ class VehiculeController {
         try {
             console.log("busy");
             let result = await db.query(`
-            SELECT ${table_incident_vehicule}.id_vehicule
+            SELECT ${table_incident_vehicule}.id_vehicule,${table_incident_vehicule}.id_incident
             FROM ${table_incident_vehicule}`);
             console.log(result.rows);
             res.send(result.rows);
