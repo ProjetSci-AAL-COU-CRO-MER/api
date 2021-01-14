@@ -10,7 +10,7 @@ class IncidentController {
     async getAll(req, res, next) {
         try {
             let result = await db.query(`SELECT * FROM ${table}`)
-            res.send({ result: result.rows })
+            res.send(result.rows)
         } catch (error) {
             res.send({ error: error.message })
         }
@@ -39,7 +39,7 @@ class IncidentController {
     async createOne(req, res, next) {
         try {
             let message = req.body;
-            let { long: longitude, lat: latitude, type, intensity } = message;
+            let { longitude, latitude, type, intensite } = message;
             let result = await db.query(`SELECT * FROM ${table_type} WHERE code='${type}'`);
             let typeRows = result.rows;
             if (typeRows.length === 0) {
@@ -47,8 +47,8 @@ class IncidentController {
             }
             let id_type = typeRows[0].id;
             result = await db.query(`INSERT INTO ${table} (longitude, latitude, intensite, id_incident_type) 
-            VALUES (${longitude}, ${latitude}, ${intensity}, ${id_type}) RETURNING *`);
-            res.send({ result: result.rows })
+            VALUES (${longitude}, ${latitude}, ${intensite}, ${id_type}) RETURNING *`);
+            res.send(result.rows)
         } catch (error) {
             res.send({ error: error.message })
         }
@@ -57,7 +57,7 @@ class IncidentController {
     async deleteAll(req, res, next) {
         try {
             let result = await db.query(`TRUNCATE TABLE ${table}`);
-            res.send({ result: result.rows });
+            res.send(result.rows);
         } catch (error) {
             res.send({ error: error.message })
         }
