@@ -22,7 +22,7 @@ router.get('/config-pos-geo/desactive/:id', ConfPosGeoCtrl.desactivConfig);
 router.get('/config-pos-geo/delete/:id', ConfPosGeoCtrl.deleteConfig);
 
 router.get('/capteur/all', CapteurCtrl.getAll);
-router.post('/capteur/set-intensite', CapteurCtrl.setIntensite);
+router.get('/capteur/intensite/:lat/:long/:int', CapteurCtrl.setIntensite);
 
 router.get('/incident/all', IncidentCtrl.getAll);
 router.get('/incident/id/:id', IncidentCtrl.getOne);
