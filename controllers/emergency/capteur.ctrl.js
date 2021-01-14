@@ -20,8 +20,9 @@ class CapteurController {
     }
 
     setIntensite(req, res, next) {
+        console.log(req.body);
         db.
-        query(`UPDATE ${table} SET 'intensite' = ${req.params.int} WHERE longitude = ${req.params.long} AND latitude = ${req.params.lat}`)
+        query(`UPDATE ${table} SET 'intensite' = ${req.body.value} WHERE longitude = ${req.body.longitude} AND latitude = ${req.body.lattitude}`)
         .then(e => res.send(e.rows[0]))
         .catch(e => console.error(e.stack));
     }
