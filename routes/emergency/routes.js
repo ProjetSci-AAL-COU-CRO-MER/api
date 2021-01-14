@@ -39,6 +39,7 @@ router.get('/etablissement/delete/:id', EtablissementCtrl.deleteEtablissement);
 
 router.get('/vehicule/all', VehiculeCtrl.getAll);
 router.get('/vehicule/etablissement/:id', VehiculeCtrl.getVehiculeEtablissement);
+router.get('/vehicule/type/all', VehiculeCtrl.getVehiculeTypeList);
 router.post('/vehicule/new', VehiculeCtrl.newVehicule);
 router.get('/vehicule/delete/:id', VehiculeCtrl.deleteVehicule);
 

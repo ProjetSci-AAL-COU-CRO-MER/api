@@ -35,8 +35,19 @@ class VehiculeController {
         .catch(e => console.error(e.stack));
     }
 
+    getVehiculeTypeList(req, res, next) {
+        const query = `
+            SELECT * FROM ${table_type}
+        `;
+        db
+        .query(query)
+        .then(e => res.send(e.rows))
+        .catch(e => console.error(e.stack));
+    }
+
     newVehicule(req, res, next) {
-        const query = `INSERT INTO ${table} (nom, longitude, latitude, id_etablissement, id_vehicule_type, id_vehicule_etat) VALUES ('${req.body.nom}', ${req.body.longitude}, ${req.body.latitude}, ${req.body.id_etablissement}, ${req.body.id_vehicule_type}, ${req.body.id_vehicule_etat})`;
+        
+        const query = `INSERT INTO ${table} (nom, longitude, latitude, id_etablissement, id_vehicule_type, id_vehicule_etat) VALUES ('${req.body.nom}', ${req.body.longitude}, ${req.body.latitude}, ${req.body.id_etablissement}, ${req.body.id_vehicule_type}, 1)`;
         db
         .query(query)
         .then(e => res.send(true))
